@@ -14,8 +14,7 @@ public partial class EnemyInput : InputComponent
 
         if (timer <= 0)
         {
-            timer = GD.RandRange(timerMax / 2, timerMax);
-            direction = new Vector2(GD.RandRange(-1, 1), GD.RandRange(-1, 1)).Normalized();
+            RandomizeDirection();
         }
 
     }
@@ -23,5 +22,11 @@ public partial class EnemyInput : InputComponent
     public override Vector2 GetInput()
     {
         return direction;
+    }
+
+    public void RandomizeDirection()
+    {
+        timer = GD.RandRange(timerMax / 2, timerMax);
+        direction = new Vector2(GD.RandRange(-1, 1), GD.RandRange(-1, 1)).Normalized();
     }
 }

@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://c8jkk6j4btppk"]
 
+[ext_resource type="Script" path="res://Entities/Character.cs" id="1_3keha"]
 [ext_resource type="Texture2D" uid="uid://dwwjff080he66" path="res://icon.svg" id="1_7i3oe"]
-[ext_resource type="Script" path="res://Entities/Player.cs" id="1_gge45"]
 [ext_resource type="Script" path="res://Entities/PlayerInput.cs" id="3_dgglt"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_1p6lg"]
@@ -22,7 +22,7 @@ radius = 22.0227
 radius = 133.19
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("input")]
-script = ExtResource("1_gge45")
+script = ExtResource("1_3keha")
 MaxSpeed = 250
 Acceleration = 3000
 Friction = 3000

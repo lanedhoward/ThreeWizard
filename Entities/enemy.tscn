@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://cthgm37ckn857"]
 
-[ext_resource type="Script" path="res://Entities/Player.cs" id="1_3rady"]
+[ext_resource type="Script" path="res://Entities/Character.cs" id="1_qnwrk"]
 [ext_resource type="Texture2D" uid="uid://dwwjff080he66" path="res://icon.svg" id="2_6jnl1"]
 [ext_resource type="Script" path="res://Entities/EnemyInput.cs" id="3_gvspk"]
 
@@ -22,7 +22,7 @@ radius = 22.0227
 radius = 133.19
 
 [node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("input")]
-script = ExtResource("1_3rady")
+script = ExtResource("1_qnwrk")
 MaxSpeed = 150
 Acceleration = 1500
 Friction = 1500
