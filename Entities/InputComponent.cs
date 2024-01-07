@@ -17,4 +17,9 @@ public partial class InputComponent: Node2D
     {
         return Vector2.Zero;
     }
+
+    public virtual bool GetParryInput()
+    {
+        return false;
+    }
 }

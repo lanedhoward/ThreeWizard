@@ -1,5 +1,6 @@
 using Godot;
 using System;
+using System.Linq;
 
 public partial class EnemyInput : InputComponent
 {
@@ -8,6 +9,8 @@ public partial class EnemyInput : InputComponent
     [Export] double timerMax = 2;
 
     [Export] Node2D target;
+
+    [Export] Parry parry;
 
     public override void _Ready()
     {
@@ -51,5 +54,18 @@ public partial class EnemyInput : InputComponent
             return Vector2.Zero;
         }
         return target.Position;
+    }
+
+    public override bool GetParryInput()
+    {
+        if (GD.RandRange(0, 100) == 0) // random chance to check
+        {
+            if (parry.GetOverlappingAreas().Where(a => a is Bullet).Count() >= 1) // if theres a bullet in parry range
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

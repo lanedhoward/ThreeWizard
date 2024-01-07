@@ -10,12 +10,31 @@ public partial class Character : CharacterBody2D
     PackedScene bullet;
     [Export] public string BulletPath;
     [Export] public int BulletForce;
+    [Export] public int shooterId;
     [Export] public InputComponent input;
+    [Export] public Parry parry;
+
+    [Export] public int hp;
+    [Export] public Area2D hitbox;
+
 
     public override void _Ready()
     {
         base._Ready();
         bullet = (PackedScene)GD.Load(BulletPath);
+        hitbox.AreaEntered += Hitbox_AreaEntered;
+    }
+
+    private void Hitbox_AreaEntered(Area2D area)
+    {
+        if (area is Bullet b)
+        {
+            if (b.shooterId != shooterId)
+            {
+                TakeDamage(1);
+                b.QueueFree();
+            }
+        }
     }
 
     public override void _PhysicsProcess(double delta)
@@ -44,6 +63,11 @@ public partial class Character : CharacterBody2D
         if (input.GetShootInput())
         {
             Shoot();
+        }
+
+        if (input.GetParryInput())
+        {
+            DoParry();
         }
 
     }
@@ -108,8 +132,26 @@ public partial class Character : CharacterBody2D
 
         b.speed = BulletForce;
         b.direction = (target - GlobalPosition).Normalized();
+
+        b.shooterId = shooterId;
+
         //b.ApplyImpulse(new Vector2(0, 0), new Vector2(BulletForce, 0).Rotated(Rotation));
         GetParent().AddChild(b);
+    }
+
+    public void DoParry()
+    {
+        parry.StartParry();
+    }
+
+    public void TakeDamage(int damage)
+    {
+        hp -= damage;
+        if (hp <= 0)
+        {
+            // die
+            GD.Print($"I am dead!!!! {Name}");
+        }
     }
 }
 

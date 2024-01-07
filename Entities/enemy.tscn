@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://cthgm37ckn857"]
+[gd_scene load_steps=10 format=3 uid="uid://cthgm37ckn857"]
 
 [ext_resource type="Script" path="res://Entities/Character.cs" id="1_qnwrk"]
 [ext_resource type="Texture2D" uid="uid://dwwjff080he66" path="res://icon.svg" id="2_6jnl1"]
 [ext_resource type="Script" path="res://Entities/EnemyInput.cs" id="3_gvspk"]
+[ext_resource type="Script" path="res://Entities/Parry.cs" id="4_yxnhu"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_1p6lg"]
 animations = [{
@@ -21,14 +22,33 @@ radius = 22.0227
 [sub_resource type="CircleShape2D" id="CircleShape2D_x1bck"]
 radius = 133.19
 
-[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("input")]
+[sub_resource type="SpriteFrames" id="SpriteFrames_xguxs"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_6jnl1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_lh5mj"]
+radius = 62.0725
+
+[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("input", "parry", "hitbox")]
+motion_mode = 1
 script = ExtResource("1_qnwrk")
 MaxSpeed = 150
 Acceleration = 1500
 Friction = 1500
 BulletPath = "res://Entities/bullet.tscn"
 BulletForce = 300
+shooterId = 1
 input = NodePath("Input")
+parry = NodePath("Parry")
+hp = 5
+hitbox = NodePath("Hitbox")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 modulate = Color(1, 0, 0, 1)
@@ -38,15 +58,27 @@ sprite_frames = SubResource("SpriteFrames_1p6lg")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_ebjk2")
 
-[node name="Area2D" type="Area2D" parent="."]
+[node name="Hitbox" type="Area2D" parent="."]
 scale = Vector2(0.16, 0.16)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 shape = SubResource("CircleShape2D_x1bck")
 
-[node name="Muzzle" type="Node2D" parent="."]
-position = Vector2(12, 0)
-scale = Vector2(0.16, 0.16)
-
-[node name="Input" type="Node2D" parent="."]
+[node name="Input" type="Node2D" parent="." node_paths=PackedStringArray("parry")]
 script = ExtResource("3_gvspk")
+parry = NodePath("../Parry")
+
+[node name="Parry" type="Area2D" parent="." node_paths=PackedStringArray("character", "input")]
+script = ExtResource("4_yxnhu")
+character = NodePath("..")
+input = NodePath("../Input")
+timerMax = 0.25
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Parry"]
+visible = false
+modulate = Color(1, 1, 1, 0.392157)
+scale = Vector2(0.925, 0.925)
+sprite_frames = SubResource("SpriteFrames_xguxs")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Parry"]
+shape = SubResource("CircleShape2D_lh5mj")
