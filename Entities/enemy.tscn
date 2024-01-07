@@ -26,6 +26,8 @@ script = ExtResource("1_qnwrk")
 MaxSpeed = 150
 Acceleration = 1500
 Friction = 1500
+BulletPath = "res://Entities/bullet.tscn"
+BulletForce = 300
 input = NodePath("Input")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
@@ -46,5 +48,5 @@ shape = SubResource("CircleShape2D_x1bck")
 position = Vector2(12, 0)
 scale = Vector2(0.16, 0.16)
 
-[node name="Input" type="Node" parent="."]
+[node name="Input" type="Node2D" parent="."]
 script = ExtResource("3_gvspk")

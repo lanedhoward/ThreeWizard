@@ -18,4 +18,14 @@ public partial class PlayerInput : InputComponent
         input.Y = down - up;
         return input.Normalized();
     }
+
+    public override bool GetShootInput()
+    {
+        return Input.IsActionJustPressed("shoot");
+    }
+
+    public override Vector2 GetTargetPosition()
+    {
+        return GetGlobalMousePosition();
+    }
 }

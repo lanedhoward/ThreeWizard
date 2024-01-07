@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://uy5oqjfvq077"]
+[gd_scene load_steps=5 format=3 uid="uid://uy5oqjfvq077"]
 
 [ext_resource type="Texture2D" uid="uid://dwwjff080he66" path="res://icon.svg" id="1_gcgb8"]
+[ext_resource type="Script" path="res://Entities/Bullet.cs" id="1_gl3f0"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_unx6p"]
 animations = [{
@@ -15,7 +16,9 @@ animations = [{
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_fydnu"]
 
-[node name="Bullet" type="RigidBody2D"]
+[node name="Bullet" type="Area2D"]
+scale = Vector2(2.18958, 2.18958)
+script = ExtResource("1_gl3f0")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 modulate = Color(1, 0.94902, 0, 1)

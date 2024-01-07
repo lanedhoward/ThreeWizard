@@ -7,40 +7,15 @@ public partial class Character : CharacterBody2D
     [Export] public int Acceleration;
     [Export] public int Friction;
     Vector2 velocity = Vector2.Zero;
-    //PackedScene bullet = (PackedScene)GD.Load("res://Prefabs/Bullet.tscn");
+    PackedScene bullet;
+    [Export] public string BulletPath;
     [Export] public int BulletForce;
     [Export] public InputComponent input;
 
-    // Applying Friction
-    void ApplyFriction(float amount)
+    public override void _Ready()
     {
-        if (velocity.Length() > amount)
-        {
-            velocity -= velocity.Normalized() * amount;
-        }
-
-        else
-        {
-            velocity = Vector2.Zero;
-        }
-
-    }
-
-
-    // Applying Movement        
-    void ApplyMovement(Vector2 direction)
-    {
-        velocity += direction;
-        if (velocity.Length() > MaxSpeed)
-        {
-            velocity = velocity.Normalized() * MaxSpeed;
-        }
-    }
-
-    // Reloading Scene when Player Dead
-    void Die()
-    {
-        GetTree().ReloadCurrentScene();
+        base._Ready();
+        bullet = (PackedScene)GD.Load(BulletPath);
     }
 
     public override void _PhysicsProcess(double delta)
@@ -48,8 +23,6 @@ public partial class Character : CharacterBody2D
         velocity = Velocity;
 
         float _delta = (float)delta;
-
-        
 
         Vector2 inputDir = input.GetInput();
 
@@ -67,26 +40,13 @@ public partial class Character : CharacterBody2D
         Velocity = velocity;
 
         MoveAndSlide();
-
-        //LookAt(GetGlobalMousePosition());
-        /*
-        //Shooting
-        if (Input.IsActionJustPressed("left_mouse"))
+        
+        if (input.GetShootInput())
         {
-
-            RigidBody2D b = (RigidBody2D)bullet.Instantiate();
-            b.Position = GetNode<Node2D>("Muzzle").GlobalPosition;
-            b.RotationDegrees = RotationDegrees;
-            b.ApplyImpulse(new Vector2(0, 0), new Vector2(BulletForce, 0).Rotated(Rotation));
-            GetParent().AddChild(b);
-
-
-
+            Shoot();
         }
-        */
 
     }
-
     public float MoveOnAxis(float axisSpeed, float axisInput, float delta)
     {
 
@@ -134,6 +94,22 @@ public partial class Character : CharacterBody2D
         }
 
         return currentSpeed;
+    }
+
+    public void Shoot()
+    {
+        //Shooting
+        Bullet b = (Bullet)bullet.Instantiate();
+
+        b.Position = GlobalPosition;
+        //b.LookAt(target.Position);
+
+        Vector2 target = input.GetTargetPosition();
+
+        b.speed = BulletForce;
+        b.direction = (target - GlobalPosition).Normalized();
+        //b.ApplyImpulse(new Vector2(0, 0), new Vector2(BulletForce, 0).Rotated(Rotation));
+        GetParent().AddChild(b);
     }
 }
 
