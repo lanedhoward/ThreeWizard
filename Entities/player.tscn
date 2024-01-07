@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://c8jkk6j4btppk"]
+
+[ext_resource type="Texture2D" uid="uid://dwwjff080he66" path="res://icon.svg" id="1_7i3oe"]
+[ext_resource type="Script" path="res://Entities/Player.cs" id="1_gge45"]
+[ext_resource type="Script" path="res://Entities/PlayerInput.cs" id="3_dgglt"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_1p6lg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_7i3oe")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ebjk2"]
+radius = 22.0227
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x1bck"]
+radius = 133.19
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("input")]
+script = ExtResource("1_gge45")
+MaxSpeed = 250
+Acceleration = 3000
+Friction = 3000
+input = NodePath("Input")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.36, 0.36)
+sprite_frames = SubResource("SpriteFrames_1p6lg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ebjk2")
+
+[node name="Area2D" type="Area2D" parent="."]
+scale = Vector2(0.16, 0.16)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_x1bck")
+
+[node name="Muzzle" type="Node2D" parent="."]
+position = Vector2(12, 0)
+scale = Vector2(0.16, 0.16)
+
+[node name="Input" type="Node" parent="."]
+script = ExtResource("3_dgglt")
