@@ -17,6 +17,10 @@ public partial class Character : CharacterBody2D
     [Export] public int hp;
     [Export] public Area2D hitbox;
 
+    [Export] public double shootRateOfFire;
+    private double shootTimer;
+    [Export] public double parryRateOfFire;
+    private double parryTimer;
 
     public override void _Ready()
     {
@@ -70,6 +74,15 @@ public partial class Character : CharacterBody2D
             DoParry();
         }
 
+        if (shootTimer > 0)
+        {
+            shootTimer -= delta;
+        }
+
+        if (parryTimer > 0)
+        {
+            parryTimer -= delta;
+        }
     }
     public float MoveOnAxis(float axisSpeed, float axisInput, float delta)
     {
@@ -122,6 +135,12 @@ public partial class Character : CharacterBody2D
 
     public void Shoot()
     {
+        if (shootTimer > 0)
+        {
+            return;
+        }
+        shootTimer = shootRateOfFire;
+
         //Shooting
         Bullet b = (Bullet)bullet.Instantiate();
 
@@ -141,6 +160,12 @@ public partial class Character : CharacterBody2D
 
     public void DoParry()
     {
+        if (parryTimer > 0)
+        {
+            return;
+        }
+        parryTimer = parryRateOfFire;
+
         parry.StartParry();
     }
 
