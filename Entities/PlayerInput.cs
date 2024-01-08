@@ -28,4 +28,9 @@ public partial class PlayerInput : InputComponent
     {
         return GetGlobalMousePosition();
     }
+
+    public override bool GetParryInput()
+    {
+        return Input.IsActionJustPressed("reflect");
+    }
 }

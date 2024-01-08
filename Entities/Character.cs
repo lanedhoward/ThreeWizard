@@ -10,12 +10,35 @@ public partial class Character : CharacterBody2D
     PackedScene bullet;
     [Export] public string BulletPath;
     [Export] public int BulletForce;
+    [Export] public int shooterId;
     [Export] public InputComponent input;
+    [Export] public Parry parry;
+
+    [Export] public int hp;
+    [Export] public Area2D hitbox;
+
+    [Export] public double shootRateOfFire;
+    private double shootTimer;
+    [Export] public double parryRateOfFire;
+    private double parryTimer;
 
     public override void _Ready()
     {
         base._Ready();
         bullet = (PackedScene)GD.Load(BulletPath);
+        hitbox.AreaEntered += Hitbox_AreaEntered;
+    }
+
+    private void Hitbox_AreaEntered(Area2D area)
+    {
+        if (area is Bullet b)
+        {
+            if (b.shooterId != shooterId)
+            {
+                TakeDamage(1);
+                b.QueueFree();
+            }
+        }
     }
 
     public override void _PhysicsProcess(double delta)
@@ -46,6 +69,20 @@ public partial class Character : CharacterBody2D
             Shoot();
         }
 
+        if (input.GetParryInput())
+        {
+            DoParry();
+        }
+
+        if (shootTimer > 0)
+        {
+            shootTimer -= delta;
+        }
+
+        if (parryTimer > 0)
+        {
+            parryTimer -= delta;
+        }
     }
     public float MoveOnAxis(float axisSpeed, float axisInput, float delta)
     {
@@ -98,6 +135,12 @@ public partial class Character : CharacterBody2D
 
     public void Shoot()
     {
+        if (shootTimer > 0)
+        {
+            return;
+        }
+        shootTimer = shootRateOfFire;
+
         //Shooting
         Bullet b = (Bullet)bullet.Instantiate();
 
@@ -108,8 +151,32 @@ public partial class Character : CharacterBody2D
 
         b.speed = BulletForce;
         b.direction = (target - GlobalPosition).Normalized();
+
+        b.shooterId = shooterId;
+
         //b.ApplyImpulse(new Vector2(0, 0), new Vector2(BulletForce, 0).Rotated(Rotation));
         GetParent().AddChild(b);
+    }
+
+    public void DoParry()
+    {
+        if (parryTimer > 0)
+        {
+            return;
+        }
+        parryTimer = parryRateOfFire;
+
+        parry.StartParry();
+    }
+
+    public void TakeDamage(int damage)
+    {
+        hp -= damage;
+        if (hp <= 0)
+        {
+            // die
+            GD.Print($"I am dead!!!! {Name}");
+        }
     }
 }
 
