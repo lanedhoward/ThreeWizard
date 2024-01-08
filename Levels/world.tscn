@@ -1,7 +1,8 @@
-[gd_scene load_steps=4 format=3 uid="uid://cqdqb0kr614g5"]
+[gd_scene load_steps=5 format=3 uid="uid://cqdqb0kr614g5"]
 
 [ext_resource type="PackedScene" uid="uid://c8jkk6j4btppk" path="res://Entities/player.tscn" id="1_ocltm"]
 [ext_resource type="PackedScene" uid="uid://cthgm37ckn857" path="res://Entities/enemy.tscn" id="2_d4ad8"]
+[ext_resource type="Script" path="res://Levels/GameManager.cs" id="3_1tmxw"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kl87e"]
 
@@ -14,13 +15,13 @@ scale = Vector2(1, 1)
 position = Vector2(41, 17)
 
 [node name="Enemy" parent="." instance=ExtResource("2_d4ad8")]
-position = Vector2(-155, -52)
+position = Vector2(-421, -193)
 
 [node name="Enemy2" parent="." instance=ExtResource("2_d4ad8")]
-position = Vector2(236, -115)
+position = Vector2(447, -155)
 
 [node name="Enemy3" parent="." instance=ExtResource("2_d4ad8")]
-position = Vector2(-180, 161)
+position = Vector2(-377, 188)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(-594, 0)
@@ -51,3 +52,11 @@ scale = Vector2(-3.78364, 71.4573)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D4"]
 shape = SubResource("RectangleShape2D_kl87e")
+
+[node name="GameManager" type="Node2D" parent="."]
+script = ExtResource("3_1tmxw")
+timerMax = 25.0
+EnemyPath = "res://Entities/enemy.tscn"
+XMax = 500
+YMax = 300
+ScenePath = "res://Menus/SummaryScene.tscn"

@@ -225,5 +225,11 @@ public partial class Character : CharacterBody2D
             GD.Print($"I am dead!!!! {Name}");
         }
     }
+
+    public void Die()
+    {
+        Score.Kills += 1;
+        QueueFree();
+    }
 }
 

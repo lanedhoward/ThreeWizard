@@ -1,0 +1,63 @@
+[gd_scene load_steps=3 format=3 uid="uid://3vxnwg1k8d2f"]
+
+[ext_resource type="Script" path="res://Menus/SceneChangeMenu.cs" id="1_aqgd7"]
+[ext_resource type="Texture2D" uid="uid://brx204o3q5chp" path="res://Art/poor gilbert title screen.png" id="2_rbdae"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_aqgd7")
+ScenePath = "res://Menus/ComicPage.tscn"
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0, 0, 0, 1)
+
+[node name="PoorGilbertTitleScreen" type="Sprite2D" parent="."]
+position = Vector2(598, 10)
+scale = Vector2(4, 4)
+texture = ExtResource("2_rbdae")
+
+[node name="StartButton" type="Button" parent="."]
+offset_left = 427.0
+offset_top = 415.0
+offset_right = 552.0
+offset_bottom = 446.0
+scale = Vector2(2, 2)
+text = "RESTART GAME"
+
+[node name="QuitButton" type="Button" parent="."]
+offset_left = 448.0
+offset_top = 516.0
+offset_right = 554.0
+offset_bottom = 547.0
+scale = Vector2(2, 2)
+text = "QUIT GAME"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 272.0
+offset_top = 272.0
+offset_right = 662.0
+offset_bottom = 298.0
+scale = Vector2(1.47301, 1.47301)
+text = "You died (again). The wizards still have your shoes."
+
+[node name="ScoreText" type="Label" parent="."]
+layout_mode = 0
+offset_left = 459.0
+offset_top = 321.0
+offset_right = 663.0
+offset_bottom = 399.0
+text = "Kills: 4
+Reflects: 22
+Highest Speed Reflect: 999"
+
+[connection signal="pressed" from="StartButton" to="." method="GoToScene"]
+[connection signal="pressed" from="QuitButton" to="." method="ExitGame"]

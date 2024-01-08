@@ -1,0 +1,44 @@
+[gd_scene load_steps=3 format=3 uid="uid://bij6sjgn36x77"]
+
+[ext_resource type="Script" path="res://Menus/SceneChangeMenu.cs" id="1_jne2i"]
+[ext_resource type="Texture2D" uid="uid://brx204o3q5chp" path="res://Art/poor gilbert title screen.png" id="2_0fb16"]
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jne2i")
+ScenePath = "res://Menus/ComicPage.tscn"
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0, 0, 0, 1)
+
+[node name="PoorGilbertTitleScreen" type="Sprite2D" parent="."]
+position = Vector2(576, 324)
+scale = Vector2(4, 4)
+texture = ExtResource("2_0fb16")
+
+[node name="StartButton" type="Button" parent="PoorGilbertTitleScreen"]
+offset_left = -121.0
+offset_top = 41.25
+offset_right = -15.0
+offset_bottom = 72.25
+scale = Vector2(0.436196, 0.436196)
+text = "START GAME"
+
+[node name="QuitButton" type="Button" parent="PoorGilbertTitleScreen"]
+offset_left = 72.25
+offset_top = 41.25
+offset_right = 178.25
+offset_bottom = 72.25
+scale = Vector2(0.436196, 0.436196)
+text = "QUIT GAME"
+
+[connection signal="pressed" from="PoorGilbertTitleScreen/StartButton" to="." method="GoToScene"]
+[connection signal="pressed" from="PoorGilbertTitleScreen/QuitButton" to="." method="ExitGame"]

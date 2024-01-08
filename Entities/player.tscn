@@ -1,12 +1,12 @@
-[gd_scene load_steps=20 format=3 uid="uid://c8jkk6j4btppk"]
+[gd_scene load_steps=19 format=3 uid="uid://c8jkk6j4btppk"]
 
 [ext_resource type="Script" path="res://Entities/Character.cs" id="1_3keha"]
-[ext_resource type="Texture2D" uid="uid://dwwjff080he66" path="res://icon.svg" id="1_7i3oe"]
 [ext_resource type="Texture2D" uid="uid://b5nkjxan2nqdh" path="res://Art/Character Farts/gilbert_cast_sheet.png" id="2_slkp5"]
 [ext_resource type="Script" path="res://Entities/PlayerInput.cs" id="3_dgglt"]
 [ext_resource type="Texture2D" uid="uid://5lq4y1m6wuod" path="res://Art/Character Farts/gilbert_hurt.png" id="3_q1urt"]
 [ext_resource type="Script" path="res://Entities/Parry.cs" id="4_fae5b"]
 [ext_resource type="Texture2D" uid="uid://bwnjc6xbqt5t6" path="res://Art/Character Farts/gilbert_walk_front_sheet.png" id="4_h4afu"]
+[ext_resource type="SpriteFrames" uid="uid://36yyqn3wwm7y" path="res://Entities/Bubble.tres" id="7_mbijw"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_1rpvd"]
 atlas = ExtResource("2_slkp5")
@@ -82,24 +82,13 @@ animations = [{
 }]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_ebjk2"]
-radius = 22.0227
+radius = 28.0
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_x1bck"]
-radius = 133.19
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_1p6lg"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": ExtResource("1_7i3oe")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
+radius = 167.506
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_w6bdr"]
-radius = 62.0725
+radius = 42.0476
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("input", "parry", "hitbox")]
 motion_mode = 1
@@ -117,7 +106,7 @@ shootRateOfFire = 0.25
 parryRateOfFire = 0.35
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(1.75, 1.75)
+scale = Vector2(2, 2)
 sprite_frames = SubResource("SpriteFrames_fn0e6")
 animation = &"walk"
 
@@ -140,10 +129,8 @@ input = NodePath("../Input")
 timerMax = 0.25
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Parry"]
-visible = false
-modulate = Color(1, 1, 1, 0.392157)
-scale = Vector2(0.925, 0.925)
-sprite_frames = SubResource("SpriteFrames_1p6lg")
+scale = Vector2(2, 2)
+sprite_frames = ExtResource("7_mbijw")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Parry"]
 shape = SubResource("CircleShape2D_w6bdr")

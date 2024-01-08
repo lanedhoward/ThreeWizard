@@ -76,17 +76,27 @@ public partial class Parry : Area2D
 
     public async void ParryBullet(Bullet b)
     {
-        b.speed *= 1.15f;
+        b.speed *= 1.2f;
 
         Vector2 target = input.GetTargetPosition();
         b.direction = (target - b.GlobalPosition).Normalized();
 
         b.shooterId = character.shooterId;
 
+        if (character.shooterId == 0)
+        {
+            // player
+            // hack
+            Score.Reflects += 1;
+            if (b.speed > Score.HighestSpeedReflect)
+            {
+                Score.HighestSpeedReflect = b.speed;
+            }
+        }
 
         //await yield(get_tree().create_timer(0.075), 'timeout');
         GetTree().Paused = true;
-        await ToSignal(GetTree().CreateTimer(0.025 + 0.015 * b.timesParried), SceneTreeTimer.SignalName.Timeout);
+        await ToSignal(GetTree().CreateTimer(0.025 + 0.03 * b.timesParried), SceneTreeTimer.SignalName.Timeout);
         GetTree().Paused = false;
 
 
