@@ -31,6 +31,7 @@ scale = Vector2(0.599479, 0.599074)
 texture = ExtResource("3_gwv31")
 
 [node name="StartButton" type="Button" parent="."]
+layout_mode = 0
 offset_left = 997.0
 offset_top = 594.0
 offset_right = 1103.0

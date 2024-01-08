@@ -371,7 +371,6 @@ shape = SubResource("RectangleShape2D_kl87e")
 
 [node name="GameManager" type="Node2D" parent="."]
 position = Vector2(41, 17)
-scale = Vector2(1, 1)
 script = ExtResource("3_1tmxw")
 timerMax = 25.0
 EnemyPath = "res://Entities/enemy.tscn"

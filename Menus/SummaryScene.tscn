@@ -26,54 +26,39 @@ scale = Vector2(4, 4)
 texture = ExtResource("2_rbdae")
 
 [node name="StartButton" type="Button" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+layout_mode = 0
 offset_left = 427.0
 offset_top = 415.0
-offset_right = -600.0
-offset_bottom = -202.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_right = 552.0
+offset_bottom = 446.0
 scale = Vector2(2, 2)
 text = "RESTART GAME"
 
 [node name="QuitButton" type="Button" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = 459.0
-offset_top = 504.0
-offset_right = -596.0
-offset_bottom = -113.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 0
+offset_left = 456.0
+offset_top = 495.0
+offset_right = 553.0
+offset_bottom = 526.0
 scale = Vector2(2, 2)
 text = "QUIT GAME"
 
 [node name="Label" type="Label" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
+layout_mode = 0
 offset_left = 272.0
 offset_top = 272.0
-offset_right = -490.0
-offset_bottom = -350.0
+offset_right = 662.0
+offset_bottom = 298.0
 scale = Vector2(1.47301, 1.47301)
 text = "You died (again). The wizards still have your shoes."
 
 [node name="ScoreText" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_right = 1.0
-anchor_bottom = 1.0
 offset_left = 457.0
 offset_top = 304.0
-offset_right = -491.0
-offset_bottom = -266.0
+offset_right = 661.0
+offset_bottom = 382.0
 text = "Kills: 4
 Reflects: 22
 Highest Speed Reflect: 999"
