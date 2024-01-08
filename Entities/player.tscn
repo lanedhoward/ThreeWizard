@@ -1,9 +1,91 @@
-[gd_scene load_steps=9 format=3 uid="uid://c8jkk6j4btppk"]
+[gd_scene load_steps=20 format=3 uid="uid://c8jkk6j4btppk"]
 
 [ext_resource type="Script" path="res://Entities/Character.cs" id="1_3keha"]
 [ext_resource type="Texture2D" uid="uid://dwwjff080he66" path="res://icon.svg" id="1_7i3oe"]
+[ext_resource type="Texture2D" uid="uid://b5nkjxan2nqdh" path="res://Art/Character Farts/gilbert_cast_sheet.png" id="2_slkp5"]
 [ext_resource type="Script" path="res://Entities/PlayerInput.cs" id="3_dgglt"]
+[ext_resource type="Texture2D" uid="uid://5lq4y1m6wuod" path="res://Art/Character Farts/gilbert_hurt.png" id="3_q1urt"]
 [ext_resource type="Script" path="res://Entities/Parry.cs" id="4_fae5b"]
+[ext_resource type="Texture2D" uid="uid://bwnjc6xbqt5t6" path="res://Art/Character Farts/gilbert_walk_front_sheet.png" id="4_h4afu"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1rpvd"]
+atlas = ExtResource("2_slkp5")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w06qi"]
+atlas = ExtResource("2_slkp5")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8nldd"]
+atlas = ExtResource("2_slkp5")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fvuth"]
+atlas = ExtResource("3_q1urt")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_k1cgn"]
+atlas = ExtResource("3_q1urt")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qwl42"]
+atlas = ExtResource("4_h4afu")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lmqb3"]
+atlas = ExtResource("4_h4afu")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fn0e6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1rpvd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w06qi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8nldd")
+}],
+"loop": false,
+"name": &"cast",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fvuth")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k1cgn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fvuth")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_k1cgn")
+}],
+"loop": false,
+"name": &"hurt",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qwl42")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lmqb3")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ebjk2"]
+radius = 22.0227
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x1bck"]
+radius = 133.19
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_1p6lg"]
 animations = [{
@@ -15,12 +97,6 @@ animations = [{
 "name": &"default",
 "speed": 5.0
 }]
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_ebjk2"]
-radius = 22.0227
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_x1bck"]
-radius = 133.19
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_w6bdr"]
 radius = 62.0725
@@ -41,8 +117,9 @@ shootRateOfFire = 0.25
 parryRateOfFire = 0.35
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-scale = Vector2(0.36, 0.36)
-sprite_frames = SubResource("SpriteFrames_1p6lg")
+scale = Vector2(1.75, 1.75)
+sprite_frames = SubResource("SpriteFrames_fn0e6")
+animation = &"walk"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_ebjk2")

@@ -22,11 +22,38 @@ public partial class Character : CharacterBody2D
     [Export] public double parryRateOfFire;
     private double parryTimer;
 
+    // sprite should start flipped to face right
+    public bool startFlipH;
+
+    public AnimatedSprite2D sprite;
+
+    public bool isDead;
+
+    [Signal]
+    public delegate void DeadEventHandler();
+
     public override void _Ready()
     {
         base._Ready();
         bullet = (PackedScene)GD.Load(BulletPath);
         hitbox.AreaEntered += Hitbox_AreaEntered;
+
+        sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+        sprite.AnimationFinished += Sprite_AnimationFinished;
+
+        startFlipH = sprite.FlipH;
+
+        isDead = false;
+    }
+
+    private void Sprite_AnimationFinished()
+    {
+        if (isDead)
+        {
+            EmitSignal(SignalName.Dead);
+            //QueueFree();
+        }
+        sprite.Play("walk");
     }
 
     private void Hitbox_AreaEntered(Area2D area)
@@ -44,10 +71,12 @@ public partial class Character : CharacterBody2D
     public override void _PhysicsProcess(double delta)
     {
         velocity = Velocity;
-
+        
         float _delta = (float)delta;
 
         Vector2 inputDir = input.GetInput();
+
+        if (isDead) inputDir = Vector2.Zero;
 
         //horizontal
         velocity.X = MoveOnAxis(velocity.X, inputDir.X, _delta);
@@ -64,15 +93,19 @@ public partial class Character : CharacterBody2D
 
         MoveAndSlide();
         
-        if (input.GetShootInput())
-        {
-            Shoot();
+        if (!isDead)
+        { 
+            if (input.GetShootInput())
+            {
+                Shoot();
+            }
+
+            if (input.GetParryInput())
+            {
+                DoParry();
+            }
         }
 
-        if (input.GetParryInput())
-        {
-            DoParry();
-        }
 
         if (shootTimer > 0)
         {
@@ -82,6 +115,12 @@ public partial class Character : CharacterBody2D
         if (parryTimer > 0)
         {
             parryTimer -= delta;
+        }
+
+        if (inputDir.X != 0)
+        {
+            sprite.FlipH = ((Mathf.Sign(inputDir.X)) == -1);
+            if (startFlipH) sprite.FlipH = !sprite.FlipH;
         }
     }
     public float MoveOnAxis(float axisSpeed, float axisInput, float delta)
@@ -140,6 +179,9 @@ public partial class Character : CharacterBody2D
             return;
         }
         shootTimer = shootRateOfFire;
+        parryTimer = parryRateOfFire;
+
+        sprite.Play("cast");
 
         //Shooting
         Bullet b = (Bullet)bullet.Instantiate();
@@ -164,17 +206,22 @@ public partial class Character : CharacterBody2D
         {
             return;
         }
+        shootTimer = shootRateOfFire;
         parryTimer = parryRateOfFire;
+
+        sprite.Play("cast");
 
         parry.StartParry();
     }
 
     public void TakeDamage(int damage)
     {
+        sprite.Play("hurt");
         hp -= damage;
         if (hp <= 0)
         {
             // die
+            isDead = true;
             GD.Print($"I am dead!!!! {Name}");
         }
     }

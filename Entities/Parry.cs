@@ -74,13 +74,22 @@ public partial class Parry : Area2D
         }
     }
 
-    public void ParryBullet(Bullet b)
+    public async void ParryBullet(Bullet b)
     {
-        b.speed *= 1.5f;
+        b.speed *= 1.15f;
 
         Vector2 target = input.GetTargetPosition();
-        b.direction = (target - GlobalPosition).Normalized();
+        b.direction = (target - b.GlobalPosition).Normalized();
 
         b.shooterId = character.shooterId;
+
+
+        //await yield(get_tree().create_timer(0.075), 'timeout');
+        GetTree().Paused = true;
+        await ToSignal(GetTree().CreateTimer(0.025 + 0.015 * b.timesParried), SceneTreeTimer.SignalName.Timeout);
+        GetTree().Paused = false;
+
+
+        b.timesParried += 1;
     }
 }

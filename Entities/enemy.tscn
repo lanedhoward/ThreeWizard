@@ -1,18 +1,83 @@
-[gd_scene load_steps=10 format=3 uid="uid://cthgm37ckn857"]
+[gd_scene load_steps=20 format=3 uid="uid://cthgm37ckn857"]
 
 [ext_resource type="Script" path="res://Entities/Character.cs" id="1_qnwrk"]
+[ext_resource type="Texture2D" uid="uid://his2pk6jhejc" path="res://Art/Character Farts/wizard_hurt_sheet.png" id="2_5gsjj"]
 [ext_resource type="Texture2D" uid="uid://dwwjff080he66" path="res://icon.svg" id="2_6jnl1"]
+[ext_resource type="Texture2D" uid="uid://c2n5dh5l7wryv" path="res://Art/Character Farts/wizard_man_castt.png" id="2_v3jxr"]
+[ext_resource type="Texture2D" uid="uid://duvqnppboaaxt" path="res://Art/Character Farts/wizard_run_front_sheet.png" id="3_75s7h"]
 [ext_resource type="Script" path="res://Entities/EnemyInput.cs" id="3_gvspk"]
 [ext_resource type="Script" path="res://Entities/Parry.cs" id="4_yxnhu"]
 
-[sub_resource type="SpriteFrames" id="SpriteFrames_1p6lg"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_j7jv2"]
+atlas = ExtResource("2_v3jxr")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jhahg"]
+atlas = ExtResource("2_v3jxr")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pyf6f"]
+atlas = ExtResource("2_v3jxr")
+region = Rect2(64, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_hci0e"]
+atlas = ExtResource("2_5gsjj")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_kbbes"]
+atlas = ExtResource("2_5gsjj")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qf4wv"]
+atlas = ExtResource("3_75s7h")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h2dne"]
+atlas = ExtResource("3_75s7h")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_qjf34"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_6jnl1")
+"texture": SubResource("AtlasTexture_j7jv2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jhahg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pyf6f")
+}],
+"loop": false,
+"name": &"cast",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hci0e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kbbes")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_hci0e")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_kbbes")
+}],
+"loop": false,
+"name": &"hurt",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qf4wv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h2dne")
 }],
 "loop": true,
-"name": &"default",
+"name": &"walk",
 "speed": 5.0
 }]
 
@@ -49,19 +114,20 @@ input = NodePath("Input")
 parry = NodePath("Parry")
 hp = 5
 hitbox = NodePath("Hitbox")
-shootRateOfFire = 0.25
+shootRateOfFire = 1.0
 parryRateOfFire = 0.35
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
-modulate = Color(1, 0, 0, 1)
-scale = Vector2(0.36, 0.36)
-sprite_frames = SubResource("SpriteFrames_1p6lg")
+scale = Vector2(1.75, 1.75)
+sprite_frames = SubResource("SpriteFrames_qjf34")
+animation = &"walk"
+flip_h = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_ebjk2")
 
 [node name="Hitbox" type="Area2D" parent="."]
-scale = Vector2(0.16, 0.16)
+scale = Vector2(0.215, 0.215)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
 shape = SubResource("CircleShape2D_x1bck")
@@ -69,6 +135,8 @@ shape = SubResource("CircleShape2D_x1bck")
 [node name="Input" type="Node2D" parent="." node_paths=PackedStringArray("parry")]
 script = ExtResource("3_gvspk")
 parry = NodePath("../Parry")
+ParryChance = 7
+ShootChance = 150
 
 [node name="Parry" type="Area2D" parent="." node_paths=PackedStringArray("character", "input")]
 script = ExtResource("4_yxnhu")
@@ -84,3 +152,5 @@ sprite_frames = SubResource("SpriteFrames_xguxs")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Parry"]
 shape = SubResource("CircleShape2D_lh5mj")
+
+[connection signal="Dead" from="." to="." method="queue_free"]

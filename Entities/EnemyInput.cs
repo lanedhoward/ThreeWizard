@@ -12,6 +12,9 @@ public partial class EnemyInput : InputComponent
 
     [Export] Parry parry;
 
+    [Export] int ParryChance;
+    [Export] int ShootChance;
+
     public override void _Ready()
     {
         base._Ready();
@@ -44,7 +47,7 @@ public partial class EnemyInput : InputComponent
 
     public override bool GetShootInput()
     {
-        return (GD.RandRange(0, 100) == 0);
+        return (GD.RandRange(0, ShootChance) == 0);
     }
 
     public override Vector2 GetTargetPosition()
@@ -58,7 +61,7 @@ public partial class EnemyInput : InputComponent
 
     public override bool GetParryInput()
     {
-        if (GD.RandRange(0, 100) == 0) // random chance to check
+        if (GD.RandRange(0, ParryChance) == 0) // random chance to check
         {
             if (parry.GetOverlappingAreas().Where(a => a is Bullet).Count() >= 1) // if theres a bullet in parry range
             {
