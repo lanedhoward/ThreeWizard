@@ -10,8 +10,8 @@ config_version=5
 
 [application]
 
-config/name="ThreeWizard"
-run/main_scene="res://Levels/world.tscn"
+config/name="PoorGilbert"
+run/main_scene="res://Menus/MainMenu.tscn"
 config/features=PackedStringArray("4.1", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 

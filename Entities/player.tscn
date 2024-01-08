@@ -102,7 +102,7 @@ input = NodePath("Input")
 parry = NodePath("Parry")
 hp = 5
 hitbox = NodePath("Hitbox")
-shootRateOfFire = 0.25
+shootRateOfFire = 1.0
 parryRateOfFire = 0.35
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]

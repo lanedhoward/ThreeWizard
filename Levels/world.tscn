@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://cqdqb0kr614g5"]
+[gd_scene load_steps=10 format=3 uid="uid://cqdqb0kr614g5"]
 
 [ext_resource type="Texture2D" uid="uid://btgbayo5l8j3x" path="res://Art/CaveTilemapreal-export-x2.png" id="1_1ijmh"]
 [ext_resource type="PackedScene" uid="uid://c8jkk6j4btppk" path="res://Entities/player.tscn" id="1_ocltm"]
 [ext_resource type="PackedScene" uid="uid://cthgm37ckn857" path="res://Entities/enemy.tscn" id="2_d4ad8"]
+[ext_resource type="Script" path="res://Levels/GameManager.cs" id="3_1tmxw"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_giytg"]
 texture = ExtResource("1_1ijmh")
@@ -362,8 +363,20 @@ shape = SubResource("RectangleShape2D_kl87e")
 
 [node name="StaticBody2D4" type="StaticBody2D" parent="."]
 position = Vector2(0, 361)
-rotation = 1.5708
-scale = Vector2(-3.78364, 71.4573)
+rotation = -1.57079
+scale = Vector2(3.78364, -71.4573)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D4"]
 shape = SubResource("RectangleShape2D_kl87e")
+
+[node name="GameManager" type="Node2D" parent="."]
+position = Vector2(41, 17)
+scale = Vector2(1, 1)
+script = ExtResource("3_1tmxw")
+timerMax = 25.0
+EnemyPath = "res://Entities/enemy.tscn"
+XMax = 500
+YMax = 300
+ScenePath = "res://Menus/SummaryScene.tscn"
+
+[connection signal="Dead" from="Player" to="GameManager" method="GoToScene"]

@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://dng7efm75gfnl"]
+[gd_scene load_steps=4 format=3 uid="uid://dng7efm75gfnl"]
 
 [ext_resource type="Script" path="res://Menus/SceneChangeMenu.cs" id="1_dwuco"]
 [ext_resource type="Texture2D" uid="uid://brx204o3q5chp" path="res://Art/poor gilbert title screen.png" id="2_662iq"]
+[ext_resource type="Texture2D" uid="uid://clyxytyvct7e1" path="res://Art/gilbert comic.jpeg" id="3_gwv31"]
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -24,12 +25,17 @@ position = Vector2(576, 324)
 scale = Vector2(4, 4)
 texture = ExtResource("2_662iq")
 
+[node name="GilbertComic" type="Sprite2D" parent="."]
+position = Vector2(576.5, 325.5)
+scale = Vector2(0.599479, 0.599074)
+texture = ExtResource("3_gwv31")
+
 [node name="StartButton" type="Button" parent="."]
-offset_left = 873.0
-offset_top = 516.0
-offset_right = 979.0
-offset_bottom = 547.0
-scale = Vector2(2.03938, 2.03938)
+offset_left = 997.0
+offset_top = 594.0
+offset_right = 1103.0
+offset_bottom = 625.0
+scale = Vector2(1.38887, 1.38887)
 text = "START GAME"
 
 [connection signal="pressed" from="StartButton" to="." method="GoToScene"]
