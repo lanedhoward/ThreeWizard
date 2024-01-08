@@ -330,13 +330,13 @@ layer_0/tile_data = PackedInt32Array(196615, 196608, 8, 65542, 65536, 8, -131060
 position = Vector2(41, 17)
 
 [node name="Enemy" parent="." instance=ExtResource("2_d4ad8")]
-position = Vector2(-155, -52)
+position = Vector2(-283, -180)
 
 [node name="Enemy2" parent="." instance=ExtResource("2_d4ad8")]
-position = Vector2(236, -115)
+position = Vector2(380, -173)
 
 [node name="Enemy3" parent="." instance=ExtResource("2_d4ad8")]
-position = Vector2(-180, 161)
+position = Vector2(-359, 167)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 position = Vector2(-594, 0)
